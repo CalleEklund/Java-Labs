@@ -31,10 +31,10 @@ public class Board
 	SquareType[][] randomBoard = null;
 	for (int i = 0; i < this.width; i++) {
 	    for (int j = 0; j < this.heigth; j++) {
-		randomBoard[i][j] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
+		squares[i][j] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
 	    }
 	}
-	return randomBoard;
+	return squares;
     }
 
     public static void main(String[] args) {
