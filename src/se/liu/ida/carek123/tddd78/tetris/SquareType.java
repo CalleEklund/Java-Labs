@@ -4,7 +4,7 @@ import java.util.Random;
 
 public enum SquareType
 {
-    EMPTY,I,O,T,S,Z,J,L;
+    E,I,O,T,S,Z,J,L;
 
     public static void main(String[] args) {
         Random rnd = new Random();

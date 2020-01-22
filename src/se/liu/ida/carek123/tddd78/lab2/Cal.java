@@ -33,6 +33,8 @@ public class Cal
 	    Appointment app = new Appointment(subject, d, ts);
 	    appointments.add(app);
 
+	}else{
+	    throw new IllegalArgumentException("felmeddelande");
 	}
     }
 

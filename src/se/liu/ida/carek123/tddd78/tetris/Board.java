@@ -7,6 +7,7 @@ public class Board
     private SquareType[][] squares;
     private int width, heigth;
     private Random rnd;
+    private Poly falling;
 
     public Board(final int width, final int heigth) {
 	this.width = width;
@@ -35,6 +36,25 @@ public class Board
 	    }
 	}
 	return squares;
+    }
+
+    public SquareType getSquareAt(int x, int y) {
+	int startX = 0;
+	int startY = 0;
+
+	int sizeX = x-falling.getX();
+	int sizeY = y-falling.getY();
+
+	int endX = falling.getWidth();
+	int endY = falling.getHeight();
+
+	if(0<=sizeX && sizeX<endX && 0<=sizeY && sizeY<endY){
+
+	}
+	    //kolla om tilen är empty om den är det så returnera boardtilen
+	    //annars returnera squaretypen
+
+
     }
 
     public static void main(String[] args) {

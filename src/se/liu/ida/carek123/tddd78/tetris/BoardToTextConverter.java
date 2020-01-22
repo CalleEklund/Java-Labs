@@ -12,4 +12,5 @@ public class BoardToTextConverter
 	}
 	return textBoard.toString();
     }
+
 }
