@@ -48,8 +48,14 @@ public class Board
 	int endX = falling.getWidth();
 	int endY = falling.getHeight();
 
-	if(0<=sizeX && sizeX<endX && 0<=sizeY && sizeY<endY){
-
+	if(startX<=sizeX && sizeX<endX && startY<=sizeY && sizeY<endY){
+	    if(squares[sizeX][sizeY] == SquareType.E){
+	        return squares[x][y];
+	    }else{
+	        return squares[sizeX][sizeY];
+	    }
+	}else{
+	    return null;
 	}
 	    //kolla om tilen är empty om den är det så returnera boardtilen
 	    //annars returnera squaretypen

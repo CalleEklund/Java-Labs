@@ -7,6 +7,7 @@ public class BoardToTextConverter
 	for (int i = 0; i < b.getWidth(); i++) {
 	    for (int j = 0; j < b.getHeigth(); j++) {
 		textBoard.append(b.getSquareType(i, j));
+
 	    }
 	    textBoard.append("\n");
 	}
