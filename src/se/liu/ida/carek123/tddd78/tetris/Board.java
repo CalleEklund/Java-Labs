@@ -5,13 +5,14 @@ import java.util.Random;
 public class Board
 {
     private SquareType[][] squares;
-    private int width, heigth;
+    private int width, height;
     private Random rnd;
     private Poly falling;
 
+
     public Board(final int width, final int heigth) {
 	this.width = width;
-	this.heigth = heigth;
+	this.height = heigth;
 	this.squares = new SquareType[heigth][width];
 	rnd = new Random();
     }
@@ -24,15 +25,19 @@ public class Board
 	return width;
     }
 
-    public int getHeigth() {
-	return heigth;
+    public int getHeight() {
+	return height;
+    }
+
+    public Poly getFalling() {
+	return falling;
     }
 
     public SquareType[][] insertRandomST() {
 	SquareType[][] randomBoard = null;
 	for (int i = 0; i < this.width; i++) {
-	    for (int j = 0; j < this.heigth; j++) {
-		squares[i][j] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
+	    for (int j = 0; j < this.height; j++) {
+		squares[j][i] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
 	    }
 	}
 	return squares;
@@ -49,13 +54,13 @@ public class Board
 	int endY = falling.getHeight();
 
 	if(startX<=sizeX && sizeX<endX && startY<=sizeY && sizeY<endY){
-	    if(squares[sizeX][sizeY] == SquareType.E){
+	    if(falling.getPoly(sizeX,sizeY) == SquareType.E){
 	        return squares[x][y];
 	    }else{
-	        return squares[sizeX][sizeY];
+	        return falling.getPoly(sizeX,sizeY);
 	    }
 	}else{
-	    return null;
+	    return squares[x][y];
 	}
 	    //kolla om tilen är empty om den är det så returnera boardtilen
 	    //annars returnera squaretypen
@@ -63,8 +68,11 @@ public class Board
 
     }
 
+    public void setFalling(Poly falling) {
+	this.falling = falling;
+    }
+
     public static void main(String[] args) {
 	Board b = new Board(5, 5);
-	System.out.println(b.squares[6][0]);
     }
 }

@@ -6,7 +6,7 @@ public class TetrominoMaker
 	return SquareType.values().length;
     }
 
-    public Poly getPoly(int n) {
+    public static Poly getPoly(int n) {
 	Poly p;
 	SquareType[][] sq;
 	if (n <= 0 || n >= 8) {
