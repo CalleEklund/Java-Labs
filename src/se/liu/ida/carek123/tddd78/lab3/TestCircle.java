@@ -17,7 +17,7 @@ public class TestCircle
 	circles.add(c3);
 
 	for (Circle circle : circles) {
-	    System.out.println(circle.getX());
+	    System.out.println(circle);
 	}
     }
 }
