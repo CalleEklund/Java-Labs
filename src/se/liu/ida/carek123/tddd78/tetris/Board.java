@@ -35,8 +35,8 @@ public class Board
 
     public SquareType[][] insertRandomST() {
 	SquareType[][] randomBoard = null;
-	for (int i = 0; i < this.width; i++) {
-	    for (int j = 0; j < this.height; j++) {
+	for (int i = 0; i < this.height; i++) {
+	    for (int j = 0; j < this.width; j++) {
 		squares[j][i] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
 	    }
 	}
@@ -62,10 +62,6 @@ public class Board
 	}else{
 	    return squares[x][y];
 	}
-	    //kolla om tilen är empty om den är det så returnera boardtilen
-	    //annars returnera squaretypen
-
-
     }
 
     public void setFalling(Poly falling) {

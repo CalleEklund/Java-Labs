@@ -22,9 +22,6 @@ public class Poly
     public SquareType getPoly(int x, int y) {
 	return poly[x][y];
     }
-    public SquareType getUpperLeft(){
-        return poly[0][0];
-    }
     public int getHeight(){
         return poly[0].length;
     }
