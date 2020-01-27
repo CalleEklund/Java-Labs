@@ -24,6 +24,6 @@ public class Date
     }
 
     @Override public String toString() {
-	return "("+ year + "-" + day + "-" + month.toString()+")";
+	return "(" + year + "-" + day + "-" + month + ")";
     }
 }

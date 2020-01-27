@@ -7,7 +7,7 @@ public class Board
     private SquareType[][] squares;
     private int width, height;
     private Random rnd;
-    private Poly falling;
+    private Poly falling = null;
 
 
     public Board(final int width, final int heigth) {
@@ -15,6 +15,12 @@ public class Board
 	this.height = heigth;
 	this.squares = new SquareType[heigth][width];
 	rnd = new Random();
+
+	for (int i = 0; i < height; i++) {
+	    for (int j = 0; j < width; j++) {
+		squares[i][j] = SquareType.E;
+	    }
+	}
     }
 
     public SquareType getSquareType(int x, int y) {
@@ -67,8 +73,5 @@ public class Board
     public void setFalling(Poly falling) {
 	this.falling = falling;
     }
-
-    public static void main(String[] args) {
-	Board b = new Board(5, 5);
-    }
 }
+

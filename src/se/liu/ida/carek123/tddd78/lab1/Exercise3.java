@@ -15,7 +15,7 @@ public class Exercise3
 	    for (int i = 0; i <= 12; i++) {
 		System.out.println(i + " * " + tabell + " = " + (i * tabell));
 	    }
-	} catch (Exception e) {
+	} catch (NumberFormatException e) {
 	    System.out.println("Please input a number, error:" + e);
 	}
 

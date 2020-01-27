@@ -23,7 +23,7 @@ public class TetrisViewer
     }
 
     public static void main(String[] args) {
-        Board brade = new Board(8,10);
+        Board brade = new Board(8,15);
         Poly falling = TetrominoMaker.getPoly(5);
 
         brade.setFalling(falling);

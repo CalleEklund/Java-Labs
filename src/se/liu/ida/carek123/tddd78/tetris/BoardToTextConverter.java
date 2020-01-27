@@ -22,38 +22,36 @@ public class BoardToTextConverter
 	StringBuilder tb = new StringBuilder();
 	for (int i = 0; i < b.getHeight(); i++) {
 	    for (int j = 0; j < b.getWidth(); j++) {
-		if (b.getSquareAt(i, j) == null) {
-		    tb.append(" ");
-		} else {
-		    switch (b.getSquareAt(i, j)) {
-			case E:
-			    tb.append(" ");
-			    break;
-			case I:
-			    tb.append("I");
-			    break;
-			case O:
-			    tb.append("O");
-			    break;
-			case T:
-			    tb.append("T");
-			    break;
-			case S:
-			    tb.append("S");
-			    break;
-			case Z:
-			    tb.append("Z");
-			    break;
-			case J:
-			    tb.append("J");
-			    break;
-			case L:
-			    tb.append("L");
-			    break;
-			default:
-			    tb.append("#");
-			    break;
-		    }
+
+		switch (b.getSquareAt(i, j)) {
+		    case E:
+			tb.append("-");
+			break;
+		    case I:
+			tb.append("I");
+			break;
+		    case O:
+			tb.append("O");
+			break;
+		    case T:
+			tb.append("T");
+			break;
+		    case S:
+			tb.append("S");
+			break;
+		    case Z:
+			tb.append("Z");
+			break;
+		    case J:
+			tb.append("J");
+			break;
+		    case L:
+			tb.append("L");
+			break;
+		    default:
+			tb.append("#");
+			break;
+
 		}
 	    }
 	    tb.append("\n");

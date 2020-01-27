@@ -26,7 +26,7 @@ public class Person
 	Person a = new Person("Calle",LocalDate.of(2000,10,15));
 	Person b = new Person("Emma",LocalDate.of(2004,4,30));
 
-	System.out.println(a.toString());
-	System.out.println(b.toString());
+	System.out.println(a);
+	System.out.println(b);
     }
 }

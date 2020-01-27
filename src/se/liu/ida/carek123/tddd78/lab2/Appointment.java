@@ -25,6 +25,6 @@ public class Appointment
     }
 
     @Override public String toString() {
-	return "Appointment (subject-date-timespan): " + subject + "-" + date.toString() + "-" +timespan.toString() ;
+	return "Appointment (subject-date-timespan): " + subject + "-" + date + "-" + timespan;
     }
 }
