@@ -12,5 +12,4 @@ public interface Shape
 
     public void draw(final Graphics g);
 
-
 }

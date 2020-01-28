@@ -50,14 +50,15 @@ public class DiagramViewer
 		    comp.addShape(getRandomRectangle());
 		    break;
 		case 2:
-		    comp.addShape(getRandomCircle());
+		    comp.addShape(getRandomText());
 		    break;
 	    }
 	}
-
+	System.out.println(comp.toString());
 	JFrame frame = new JFrame("Mitt fönster");
 	frame.setLayout(new BorderLayout());
 	frame.add(comp, BorderLayout.CENTER);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setSize(800, 600);
 	frame.setVisible(true);
     }
