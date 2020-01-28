@@ -10,7 +10,7 @@ public interface Shape
 
     Color getColor();
 
-    public void draw();
+    public void draw(final Graphics g);
 
 
 }

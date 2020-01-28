@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Rectangle extends AbstractShape
 {
-    private int width,height;
+    private int width, height;
 
-    public Rectangle(final int x,final int y,final int width, final int height,final Color color) {
-        super(x,y,color);
+    public Rectangle(final int x, final int y, final int width, final int height, final Color color) {
+	super(x, y, color);
 	this.width = width;
 	this.height = height;
 
@@ -17,7 +17,10 @@ public class Rectangle extends AbstractShape
 	return "x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", color=" + color + '}';
     }
 
-    @Override public void draw() {
-	System.out.println("Ritar: "+ this);
+    @Override public void draw(final Graphics g) {
+
+	//System.out.println("Ritar: "+ this);
+	g.setColor(color);
+	g.drawRect(x, y, width, height);
     }
 }

@@ -7,13 +7,14 @@ public class Board
     private SquareType[][] squares;
     private int width, height;
     private Random rnd;
+    //sätt som standard case 0
     private Poly falling = null;
 
 
-    public Board(final int width, final int heigth) {
+    public Board(final int width, final int height) {
 	this.width = width;
-	this.height = heigth;
-	this.squares = new SquareType[heigth][width];
+	this.height = height;
+	this.squares = new SquareType[height][width];
 	rnd = new Random();
 
 	for (int i = 0; i < height; i++) {
@@ -40,10 +41,9 @@ public class Board
     }
 
     public SquareType[][] insertRandomST() {
-	SquareType[][] randomBoard = null;
 	for (int i = 0; i < this.height; i++) {
 	    for (int j = 0; j < this.width; j++) {
-		squares[j][i] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
+		squares[i][j] = SquareType.values()[rnd.nextInt(SquareType.values().length)];
 	    }
 	}
 	return squares;

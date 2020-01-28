@@ -2,17 +2,19 @@ package se.liu.ida.carek123.tddd78.tetris;
 
 public class TetrominoMaker
 {
-    public int getNumberOfTypes() {
+    public static int getNumberOfTypes() {
 	return SquareType.values().length;
     }
 
     public static Poly getPoly(int n) {
 	Poly p;
 	SquareType[][] sq;
-	if (n <= 0 || n >= 8) {
+
+	if (n <= 0 || n >= getNumberOfTypes()) {
 	    throw new IllegalArgumentException("invalid index:" + n);
 	} else {
 	    switch (n) {
+	        //lägg till case 0 1x1 tom array för empty
 		case 1:
 		    sq = new SquareType[4][4];
 

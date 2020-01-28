@@ -15,6 +15,7 @@ public class TetrisViewer
         JFrame frame = new JFrame("Tetris");
         JTextArea textarea = new JTextArea(b.getHeight(),b.getWidth());
         textarea.setText(BoardToTextConverter.convertToText(b));
+
         frame.setLayout(new BorderLayout());
         frame.add(textarea,BorderLayout.CENTER);
         textarea.setFont(new Font("Monospaced", Font.PLAIN, 20));

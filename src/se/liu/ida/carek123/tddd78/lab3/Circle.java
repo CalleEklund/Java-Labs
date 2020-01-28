@@ -1,6 +1,6 @@
 package se.liu.ida.carek123.tddd78.lab3;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Circle extends AbstractShape
 {
@@ -18,8 +18,11 @@ public class Circle extends AbstractShape
 	return radius;
     }
 
-    @Override public void draw() {
-	System.out.println("Ritar: " + this);
+    @Override public void draw(final Graphics g) {
+
+        //System.out.println("Ritar: " + this);
+	g.setColor(color);
+	g.drawOval(x,y,radius,radius);
     }
 
     @Override public String toString() {

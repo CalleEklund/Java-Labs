@@ -7,8 +7,11 @@ public class BoardTest
 
 	Board b = new Board(5, 10);
 	//för att ändra startpos för polyn så ändra x o y i poly klassen
-	Poly falling = TetrominoMaker.getPoly(4);
+	//b.insertRandomST();
+
+	Poly falling = TetrominoMaker.getPoly(1);
 	b.setFalling(falling);
+	//b.insertRandomST();
 	System.out.println(BoardToTextConverter.convertToText(b));
 
     }

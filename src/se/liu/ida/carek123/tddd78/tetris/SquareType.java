@@ -9,7 +9,7 @@ public enum SquareType
     public static void main(String[] args) {
         Random rnd = new Random();
         for (int i = 0; i <=25 ; i++) {
-            System.out.println("Random sqauretype: "+SquareType.values()[rnd.nextInt(SquareType.values().length)]);
+            System.out.println("Random squaretype: "+SquareType.values()[rnd.nextInt(SquareType.values().length)]);
         }
     }
 

@@ -17,9 +17,9 @@ public class TestShapes
 	shapes.add(r1);
 	shapes.add(t1);
 
-	for (Shape shape : shapes) {
+	/*for (Shape shape : shapes) {
 	    shape.draw();
 	    //System.out.println(shape.getX() + " " + shape.getY());
-	}
+	}*/
     }
 }
