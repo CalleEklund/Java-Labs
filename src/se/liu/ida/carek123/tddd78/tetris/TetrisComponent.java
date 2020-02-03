@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.EnumMap;
 
-public class TetrisComponent extends JComponent {
-    private final static int SQUARE_SIZE = 150;
+public class TetrisComponent extends JComponent implements BoardListener {
+    private final static int SQUARE_SIZE = 30;
     private Board b;
     private EnumMap<SquareType, Color> STColor;
     public TetrisComponent(Board b) {
@@ -29,7 +29,7 @@ public class TetrisComponent extends JComponent {
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
                 g2d.setColor(STColor.get(b.getSquareAt(i,j)));
-                g2d.drawRect(i,j,SQUARE_SIZE,SQUARE_SIZE);
+                g2d.fillRect(i*SQUARE_SIZE,j*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
 
             }
         }
@@ -43,5 +43,10 @@ public class TetrisComponent extends JComponent {
     public static void main(String[] args) {
         Dimension test = getPreferredScreenSize();
         System.out.println(test.height+" "+test.width);
+    }
+
+    @Override
+    public void BoardChanged() {
+        repaint();
     }
 }
