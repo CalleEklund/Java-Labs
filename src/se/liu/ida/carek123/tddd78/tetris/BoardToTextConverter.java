@@ -32,6 +32,9 @@ public class BoardToTextConverter
 		    case L:
 			tb.append("L");
 			break;
+		    case OUTSIDE:
+		        tb.append("D");
+		        break;
 		    default:
 			tb.append("#");
 			break;

@@ -26,7 +26,12 @@ public class Board
 
 	for (int i = 0; i < height; i++) {
 	    for (int j = 0; j < width; j++) {
-		squares[i][j] = SquareType.E;
+		if ((i <= height && j < 2) || (i < 2 && j <= width) || (i >= (height - 2) && j < width) ||
+		    (i < height && j >= (width - 2))) {
+		    squares[i][j] = SquareType.OUTSIDE;
+		} else {
+		    squares[i][j] = SquareType.E;
+		}
 	    }
 	}
     }
@@ -104,12 +109,32 @@ public class Board
 	}
     }
 
+    public boolean hasCollision() {
+	//System.out.println("Board bounds h:" + height + " w:" + width);
+	//System.out.println("Falling cords x:" + falling.getX() + " y:" + falling.getY() + " " + falling.getHeight() + " " +
+	//		   falling.getWidth());
+
+	//System.out.println(falling.getY() + "" + getWidth());
+
+	if (falling != null) {
+	    if (falling.getX() < 2 || falling.getX() > getHeight() - 4 || falling.getY() < 2 ||
+		falling.getY() > getWidth() - 4) {
+		return true;
+	    } else {
+		return false;
+	    }
+	} else {
+	    return false;
+	}
+
+    }
+
     public void tick() {
 	if (falling != null) {
 	    falling.setY(falling.getY() + 1);
 	    notifyListeners();
 	} else {
-	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes());
+	    int randInd = 1 + rnd.nextInt(TetrominoMaker.getNumberOfTypes());
 	    Poly newPoly = TetrominoMaker.getPoly(randInd);
 	    setFalling(newPoly);
 	}
@@ -119,8 +144,10 @@ public class Board
     Action moveLeft = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-	    System.out.println("LEFT");
-	    falling.setX(falling.getX() - 1);
+	    //System.out.println("LEFT");
+	    if (hasCollision() == false) {
+		falling.setX(falling.getX() - 1);
+	    }
 	    notifyListeners();
 	}
 
@@ -129,8 +156,10 @@ public class Board
     final Action moveRight = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-	    System.out.println("RIGHT");
-	    falling.setX(falling.getX() + 1);
+	    //System.out.println("RIGHT");
+	    if (hasCollision() == false) {
+		falling.setX(falling.getX()+1);
+	    }
 	    notifyListeners();
 	}
     };

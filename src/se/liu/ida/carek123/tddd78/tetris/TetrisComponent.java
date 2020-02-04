@@ -20,6 +20,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
         STColor.put(SquareType.T,Color.MAGENTA);
         STColor.put(SquareType.Z,Color.RED);
         STColor.put(SquareType.E,Color.BLACK);
+        STColor.put(SquareType.OUTSIDE,Color.PINK);
     }
 
     @Override

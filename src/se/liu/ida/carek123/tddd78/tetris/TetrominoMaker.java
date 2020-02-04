@@ -15,6 +15,12 @@ public class TetrominoMaker
 	} else {
 	    switch (n) {
 	        //lägg till case 0 1x1 tom array för empty
+		case 0:
+		    sq = new SquareType[1][1];
+		    sq[0][0] = SquareType.E;
+		    sq[0][1] = SquareType.E;
+		    p = new Poly(sq);
+		    return p;
 		case 1:
 		    sq = new SquareType[4][4];
 
