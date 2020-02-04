@@ -10,7 +10,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
     private EnumMap<SquareType, Color> STColor;
     public TetrisComponent(Board b) {
         this.b = b;
-        this.STColor = new EnumMap<SquareType, Color>(SquareType.class);
+        this.STColor = new EnumMap<>(SquareType.class);
 
         STColor.put(SquareType.I,Color.CYAN);
         STColor.put(SquareType.J,Color.BLUE);
@@ -30,7 +30,8 @@ public class TetrisComponent extends JComponent implements BoardListener {
             for (int j = 0; j < b.getWidth(); j++) {
                 g2d.setColor(STColor.get(b.getSquareAt(i,j)));
                 g2d.fillRect(i*SQUARE_SIZE,j*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
-
+                g2d.setColor(Color.WHITE);
+                g2d.drawRect(i*SQUARE_SIZE,j*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE);
             }
         }
     }
@@ -49,4 +50,5 @@ public class TetrisComponent extends JComponent implements BoardListener {
     public void BoardChanged() {
         repaint();
     }
+
 }
