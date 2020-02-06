@@ -110,22 +110,19 @@ public class Board
     }
 
     public boolean hasCollision() {
-	//System.out.println("Board bounds h:" + height + " w:" + width);
-	//System.out.println("Falling cords x:" + falling.getX() + " y:" + falling.getY() + " " + falling.getHeight() + " " +
-	//		   falling.getWidth());
-
-	//System.out.println(falling.getY() + "" + getWidth());
-
-	if (falling != null) {
-	    if (falling.getX() < 2 || falling.getX() > getHeight() - 4 || falling.getY() < 2 ||
-		falling.getY() > getWidth() - 4) {
+	/*
+	* else if(getSquareAt(falling.getWidth(),falling.getY())!=SquareType.E){
+		System.out.println("Right Collision");
 		return true;
-	    } else {
-		return false;
 	    }
+	    * */
+	System.out.println(getSquareAt(falling.getX(),falling.getY()));
+	if (getSquareAt(falling.getX(), falling.getY()) != SquareType.E) {
+	    return true;
 	} else {
 	    return false;
 	}
+
 
     }
 
@@ -134,8 +131,8 @@ public class Board
 	    falling.setY(falling.getY() + 1);
 	    notifyListeners();
 	} else {
-	    int randInd = 1 + rnd.nextInt(TetrominoMaker.getNumberOfTypes());
-	    Poly newPoly = TetrominoMaker.getPoly(randInd);
+	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
+	    Poly newPoly = TetrominoMaker.getPoly(3);
 	    setFalling(newPoly);
 	}
 
@@ -145,9 +142,7 @@ public class Board
     {
 	public void actionPerformed(ActionEvent e) {
 	    //System.out.println("LEFT");
-	    if (hasCollision() == false) {
-		falling.setX(falling.getX() - 1);
-	    }
+	    falling.setX(falling.getX() - 1);
 	    notifyListeners();
 	}
 
@@ -157,9 +152,7 @@ public class Board
     {
 	public void actionPerformed(ActionEvent e) {
 	    //System.out.println("RIGHT");
-	    if (hasCollision() == false) {
-		falling.setX(falling.getX()+1);
-	    }
+	    falling.setX(falling.getX() + 1);
 	    notifyListeners();
 	}
     };

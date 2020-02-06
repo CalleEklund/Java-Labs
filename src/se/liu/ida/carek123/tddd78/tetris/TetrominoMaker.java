@@ -10,18 +10,12 @@ public class TetrominoMaker
 	Poly p;
 	SquareType[][] sq;
 
-	if (n <= 0 || n >= getNumberOfTypes()) {
+	if (n < 0 || n >= getNumberOfTypes()) {
 	    throw new IllegalArgumentException("invalid index:" + n);
 	} else {
 	    switch (n) {
 	        //lägg till case 0 1x1 tom array för empty
 		case 0:
-		    sq = new SquareType[1][1];
-		    sq[0][0] = SquareType.E;
-		    sq[0][1] = SquareType.E;
-		    p = new Poly(sq);
-		    return p;
-		case 1:
 		    sq = new SquareType[4][4];
 
 		    sq[0][0] = SquareType.E;
@@ -46,7 +40,7 @@ public class TetrominoMaker
 		    p = new Poly(sq);
 		    return p;
 
-		case 2:
+		case 1:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.J;
 		    sq[0][1] = SquareType.E;
@@ -64,7 +58,7 @@ public class TetrominoMaker
 		    return p;
 
 
-		case 3:
+		case 2:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.E;
 		    sq[0][1] = SquareType.E;
@@ -79,7 +73,7 @@ public class TetrominoMaker
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;
-		case 4:
+		case 3:
 		    sq = new SquareType[2][2];
 		    sq[0][0] = SquareType.O;
 		    sq[0][1] = SquareType.O;
@@ -87,7 +81,7 @@ public class TetrominoMaker
 		    sq[1][1] = SquareType.O;
 		    p = new Poly(sq);
 		    return p;
-		case 5:
+		case 4:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.E;
 		    sq[0][1] = SquareType.S;
@@ -102,7 +96,7 @@ public class TetrominoMaker
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;
-		case 6:
+		case 5:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.E;
 		    sq[0][1] = SquareType.T;
@@ -117,7 +111,7 @@ public class TetrominoMaker
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;
-		case 7:
+		case 6:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.Z;
 		    sq[0][1] = SquareType.Z;

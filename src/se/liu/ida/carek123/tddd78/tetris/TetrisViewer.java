@@ -8,6 +8,7 @@ public class TetrisViewer
 {
     private Board b;
     private final static int FONT_SIZE = 16;
+    int tim = 0;
 
 
     public TetrisViewer(final Board b) {
@@ -19,6 +20,8 @@ public class TetrisViewer
 	JTextArea textarea = new JTextArea(b.getHeight(), b.getWidth());
 	TetrisComponent tc = new TetrisComponent(b);
 
+
+
 	final InputMap in = tc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	in.put(KeyStroke.getKeyStroke("LEFT"), "moveleft");
 	in.put(KeyStroke.getKeyStroke("RIGHT"), "moveright");
@@ -26,6 +29,7 @@ public class TetrisViewer
 	final ActionMap act = tc.getActionMap();
 	act.put("moveleft", b.moveLeft);
 	act.put("moveright", b.moveRight);
+
 
 	//Poly falling = TetrominoMaker.getPoly(5);
 	//b.setFalling(falling);
@@ -37,9 +41,10 @@ public class TetrisViewer
 		//System.out.println(BoardToTextConverter.convertToText(b));
 		//tc.repaint();
 		b.tick();
+		tim++;
 		b.addBoardListeners(tc);
-
-		//System.out.println(b.hasCollision());
+		System.out.println(b.hasCollision());
+		//System.out.println("tid: " + tim);
 	    }
 	};
 
@@ -47,7 +52,6 @@ public class TetrisViewer
 	final Timer clockTimer = new Timer(2000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
-
 	frame.setLayout(new BorderLayout());
 	frame.add(tc, BorderLayout.CENTER);
 	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

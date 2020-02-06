@@ -19,7 +19,7 @@ public class TetrisComponent extends JComponent implements BoardListener {
         STColor.put(SquareType.S,Color.GREEN);
         STColor.put(SquareType.T,Color.MAGENTA);
         STColor.put(SquareType.Z,Color.RED);
-        STColor.put(SquareType.E,Color.BLACK);
+        STColor.put(SquareType.E,Color.DARK_GRAY);
         STColor.put(SquareType.OUTSIDE,Color.PINK);
     }
 
@@ -37,14 +37,15 @@ public class TetrisComponent extends JComponent implements BoardListener {
         }
     }
 
-    public static Dimension getPreferredScreenSize() {
+    @Override
+    public Dimension getPreferredSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        return screenSize;
+        return new Dimension(this.b.getHeight()*SQUARE_SIZE, this.b.getWidth()*SQUARE_SIZE);
     }
 
     public static void main(String[] args) {
-        Dimension test = getPreferredScreenSize();
-        System.out.println(test.height+" "+test.width);
+        //Dimension test = getPreferredSize();
+        //System.out.println(test.height+" "+test.width);
     }
 
     @Override
