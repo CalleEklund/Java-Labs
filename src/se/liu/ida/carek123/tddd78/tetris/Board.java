@@ -110,15 +110,8 @@ public class Board
     }
 
     public boolean hasCollision() {
-	/*
-	 * falling.getPoly(i, j) == SquareType.OUTSIDE ||
-	 *
-	 * */
-
 	for (int i = 0; i < falling.getHeight(); i++) {
 	    for (int j = 0; j < falling.getHeight(); j++) {
-//		System.out.println(falling.getPoly(i,j) +" " + getSquareType(falling.getY(), falling.getX()));
-//		System.out.println("falling: "+getSquareType(falling.getY(), falling.getX()));
 		if (falling.getPoly(i,j) != SquareType.E && getSquareType(falling.getY()+i, falling.getX()+j) == SquareType.OUTSIDE) {
 		    return true;
 		}
