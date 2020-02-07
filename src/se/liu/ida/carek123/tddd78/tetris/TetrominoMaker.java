@@ -19,22 +19,22 @@ public class TetrominoMaker
 		    sq = new SquareType[4][4];
 
 		    sq[0][0] = SquareType.E;
-		    sq[0][1] = SquareType.E;
+		    sq[0][1] = SquareType.I;
 		    sq[0][2] = SquareType.E;
 		    sq[0][3] = SquareType.E;
 
-		    sq[1][0] = SquareType.I;
+		    sq[1][0] = SquareType.E;
 		    sq[1][1] = SquareType.I;
-		    sq[1][2] = SquareType.I;
-		    sq[1][3] = SquareType.I;
+		    sq[1][2] = SquareType.E;
+		    sq[1][3] = SquareType.E;
 
 		    sq[2][0] = SquareType.E;
-		    sq[2][1] = SquareType.E;
+		    sq[2][1] = SquareType.I;
 		    sq[2][2] = SquareType.E;
 		    sq[2][3] = SquareType.E;
 
 		    sq[3][0] = SquareType.E;
-		    sq[3][1] = SquareType.E;
+		    sq[3][1] = SquareType.I;
 		    sq[3][2] = SquareType.E;
 		    sq[3][3] = SquareType.E;
 		    p = new Poly(sq);
@@ -43,15 +43,15 @@ public class TetrominoMaker
 		case 1:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.J;
-		    sq[0][1] = SquareType.E;
+		    sq[0][1] = SquareType.J;
 		    sq[0][2] = SquareType.E;
 
-		    sq[1][0] = SquareType.J;
+		    sq[1][0] = SquareType.E;
 		    sq[1][1] = SquareType.J;
-		    sq[1][2] = SquareType.J;
+		    sq[1][2] = SquareType.E;
 
 		    sq[2][0] = SquareType.E;
-		    sq[2][1] = SquareType.E;
+		    sq[2][1] = SquareType.J;
 		    sq[2][2] = SquareType.E;
 
 		    p = new Poly(sq);
@@ -61,15 +61,15 @@ public class TetrominoMaker
 		case 2:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.E;
-		    sq[0][1] = SquareType.E;
-		    sq[0][2] = SquareType.J;
+		    sq[0][1] = SquareType.L;
+		    sq[0][2] = SquareType.E;
 
-		    sq[1][0] = SquareType.J;
-		    sq[1][1] = SquareType.J;
-		    sq[1][2] = SquareType.J;
+		    sq[1][0] = SquareType.E;
+		    sq[1][1] = SquareType.L;
+		    sq[1][2] = SquareType.E;
 
-		    sq[2][0] = SquareType.E;
-		    sq[2][1] = SquareType.E;
+		    sq[2][0] = SquareType.L;
+		    sq[2][1] = SquareType.L;
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;
@@ -85,13 +85,13 @@ public class TetrominoMaker
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.E;
 		    sq[0][1] = SquareType.S;
-		    sq[0][2] = SquareType.S;
+		    sq[0][2] = SquareType.E;
 
 		    sq[1][0] = SquareType.S;
 		    sq[1][1] = SquareType.S;
 		    sq[1][2] = SquareType.E;
 
-		    sq[2][0] = SquareType.E;
+		    sq[2][0] = SquareType.S;
 		    sq[2][1] = SquareType.E;
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
@@ -104,25 +104,25 @@ public class TetrominoMaker
 
 		    sq[1][0] = SquareType.T;
 		    sq[1][1] = SquareType.T;
-		    sq[1][2] = SquareType.T;
+		    sq[1][2] = SquareType.E;
 
 		    sq[2][0] = SquareType.E;
-		    sq[2][1] = SquareType.E;
+		    sq[2][1] = SquareType.T;
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;
 		case 6:
 		    sq = new SquareType[3][3];
 		    sq[0][0] = SquareType.Z;
-		    sq[0][1] = SquareType.Z;
+		    sq[0][1] = SquareType.E;
 		    sq[0][2] = SquareType.E;
 
-		    sq[1][0] = SquareType.E;
+		    sq[1][0] = SquareType.Z;
 		    sq[1][1] = SquareType.Z;
-		    sq[1][2] = SquareType.Z;
+		    sq[1][2] = SquareType.E;
 
 		    sq[2][0] = SquareType.E;
-		    sq[2][1] = SquareType.E;
+		    sq[2][1] = SquareType.Z;
 		    sq[2][2] = SquareType.E;
 		    p = new Poly(sq);
 		    return p;

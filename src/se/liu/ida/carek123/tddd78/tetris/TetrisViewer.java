@@ -30,26 +30,18 @@ public class TetrisViewer
 	act.put("moveleft", b.moveLeft);
 	act.put("moveright", b.moveRight);
 
-
-	//Poly falling = TetrominoMaker.getPoly(5);
-	//b.setFalling(falling);
 	final Action doOneStep = new AbstractAction()
 	{
 	    @Override public void actionPerformed(ActionEvent e) {
-		//b.insertRandomST();
-		//textarea.setText(BoardToTextConverter.convertToText(b));
-		//System.out.println(BoardToTextConverter.convertToText(b));
-		//tc.repaint();
 		b.tick();
 		tim++;
 		b.addBoardListeners(tc);
 		System.out.println(b.hasCollision());
-		//System.out.println("tid: " + tim);
 	    }
 	};
 
 
-	final Timer clockTimer = new Timer(2000, doOneStep);
+	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
 	frame.setLayout(new BorderLayout());

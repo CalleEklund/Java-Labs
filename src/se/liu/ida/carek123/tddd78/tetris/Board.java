@@ -115,9 +115,11 @@ public class Board
 		System.out.println("Right Collision");
 		return true;
 	    }
+
+	 getSquareAt(falling.getX(),falling.getY())!=SquareType.OUTSIDE
 	    * */
-	System.out.println(getSquareAt(falling.getX(),falling.getY()));
-	if (getSquareAt(falling.getX(), falling.getY()) != SquareType.E) {
+	System.out.println(getSquareAt(falling.getX(), falling.getY()));
+	if (getSquareAt(falling.getX(), falling.getY()) == SquareType.OUTSIDE) {
 	    return true;
 	} else {
 	    return false;
