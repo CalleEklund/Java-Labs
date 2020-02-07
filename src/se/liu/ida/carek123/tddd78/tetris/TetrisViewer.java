@@ -8,8 +8,6 @@ public class TetrisViewer
 {
     private Board b;
     private final static int FONT_SIZE = 16;
-    int tim = 0;
-
 
     public TetrisViewer(final Board b) {
 	this.b = b;
@@ -35,14 +33,13 @@ public class TetrisViewer
 	    @Override public void actionPerformed(ActionEvent e) {
 		b.addBoardListeners(tc);
 		b.tick();
-		tim++;
 
-		System.out.println(b.hasCollision());
+		//System.out.println(b.hasCollision());
 	    }
 	};
 
 
-	final Timer clockTimer = new Timer(1500, doOneStep);
+	final Timer clockTimer = new Timer(1000, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
 	frame.setLayout(new BorderLayout());

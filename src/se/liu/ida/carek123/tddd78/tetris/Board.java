@@ -112,7 +112,8 @@ public class Board
     public boolean hasCollision() {
 	for (int i = 0; i < falling.getHeight(); i++) {
 	    for (int j = 0; j < falling.getHeight(); j++) {
-		if (falling.getPoly(i,j) != SquareType.E && getSquareType(falling.getY()+j, falling.getX()+i) != SquareType.E) {
+		if (falling.getPoly(i, j) != SquareType.E &&
+		    getSquareType(falling.getY() + j, falling.getX() + i) != SquareType.E) {
 		    return true;
 		}
 	    }
@@ -124,9 +125,12 @@ public class Board
 	if (falling != null) {
 	    notifyListeners();
 	    falling.setY(falling.getY() + 1);
+	    if(hasCollision()==true){
+	        falling.setY(falling.getY()-1);
+	    }
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(1);
+	    Poly newPoly = TetrominoMaker.getPoly(randInd);
 	    setFalling(newPoly);
 	}
 
@@ -135,8 +139,11 @@ public class Board
     Action moveLeft = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-	    //System.out.println("LEFT");
+//	    System.out.println("Vänster: "+hasCollision());
 	    falling.setX(falling.getX() - 1);
+	    if(hasCollision()==true){
+	        falling.setX(falling.getX()+1);
+	    }
 	    notifyListeners();
 	}
 
@@ -145,8 +152,12 @@ public class Board
     final Action moveRight = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-	    //System.out.println("RIGHT");
-	    falling.setX(falling.getX() + 1);
+//	    System.out.println("Höger: " + hasCollision());
+	    falling.setX(falling.getX()+1);
+	    if(hasCollision()==true){
+		falling.setX(falling.getX() - 1);
+	    }
+
 	    notifyListeners();
 	}
     };
