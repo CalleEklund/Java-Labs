@@ -111,19 +111,20 @@ public class Board
 
     public boolean hasCollision() {
 	/*
-	* else if(getSquareAt(falling.getWidth(),falling.getY())!=SquareType.E){
-		System.out.println("Right Collision");
-		return true;
+	 * falling.getPoly(i, j) == SquareType.OUTSIDE ||
+	 *
+	 * */
+
+	for (int i = 0; i < falling.getHeight(); i++) {
+	    for (int j = 0; j < falling.getHeight(); j++) {
+//		System.out.println(falling.getPoly(i,j) +" " + getSquareType(falling.getY(), falling.getX()));
+//		System.out.println("falling: "+getSquareType(falling.getY(), falling.getX()));
+		if (falling.getPoly(i,j) != SquareType.E && getSquareType(falling.getY()+i, falling.getX()+j) == SquareType.OUTSIDE) {
+		    return true;
+		}
 	    }
-	    * */
-	System.out.println(getSquareAt(falling.getX(),falling.getY()));
-	if (getSquareAt(falling.getX(), falling.getY()) != SquareType.E) {
-	    return true;
-	} else {
-	    return false;
 	}
-
-
+	return false;
     }
 
     public void tick() {
@@ -132,7 +133,7 @@ public class Board
 	    notifyListeners();
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(3);
+	    Poly newPoly = TetrominoMaker.getPoly(0);
 	    setFalling(newPoly);
 	}
 

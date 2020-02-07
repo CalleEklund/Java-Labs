@@ -40,9 +40,10 @@ public class TetrisViewer
 		//textarea.setText(BoardToTextConverter.convertToText(b));
 		//System.out.println(BoardToTextConverter.convertToText(b));
 		//tc.repaint();
+		b.addBoardListeners(tc);
 		b.tick();
 		tim++;
-		b.addBoardListeners(tc);
+
 		System.out.println(b.hasCollision());
 		//System.out.println("tid: " + tim);
 	    }
