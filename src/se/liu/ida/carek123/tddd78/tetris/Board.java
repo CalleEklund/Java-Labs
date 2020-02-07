@@ -112,7 +112,7 @@ public class Board
     public boolean hasCollision() {
 	for (int i = 0; i < falling.getHeight(); i++) {
 	    for (int j = 0; j < falling.getHeight(); j++) {
-		if (falling.getPoly(i,j) != SquareType.E && getSquareType(falling.getY()+i, falling.getX()+j) == SquareType.OUTSIDE) {
+		if (falling.getPoly(i,j) != SquareType.E && getSquareType(falling.getY()+j, falling.getX()+i) != SquareType.E) {
 		    return true;
 		}
 	    }
@@ -122,11 +122,11 @@ public class Board
 
     public void tick() {
 	if (falling != null) {
-	    falling.setY(falling.getY() + 1);
 	    notifyListeners();
+	    falling.setY(falling.getY() + 1);
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(0);
+	    Poly newPoly = TetrominoMaker.getPoly(1);
 	    setFalling(newPoly);
 	}
 
