@@ -121,17 +121,40 @@ public class Board
 	return false;
     }
 
+    public void addPolyToBoard(Poly p) {
+	for (int i = 0; i < height; i++) {
+	    for (int j = 0; j < width; j++) {
+		if ((i <= height && j < 2) || (i < 2 && j <= width) || (i >= (height - 2) && j < width) ||
+		    (i < height && j >= (width - 2))) {
+		    squares[i][j] = SquareType.OUTSIDE;
+		} else if(p != null){
+		    squares[i][j] = getSquareAt(i,j);
+		}else {
+		    squares[i][j] = SquareType.E;
+
+		}
+	    }
+	}
+	setFalling(null);
+    }
+
+
     public void tick() {
 	if (falling != null) {
 	    notifyListeners();
 	    falling.setY(falling.getY() + 1);
-	    if(hasCollision()==true){
-	        falling.setY(falling.getY()-1);
+	    if (hasCollision() == true) {
+		falling.setY(falling.getY() - 1);
+		addPolyToBoard(falling);
 	    }
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
 	    Poly newPoly = TetrominoMaker.getPoly(randInd);
 	    setFalling(newPoly);
+		//implementar en flaffa i tetrisviewer som håller koll på om det är game over
+	    if(hasCollision()){
+		System.out.println("Game Over");
+	    }
 	}
 
     }
@@ -141,8 +164,8 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 //	    System.out.println("Vänster: "+hasCollision());
 	    falling.setX(falling.getX() - 1);
-	    if(hasCollision()==true){
-	        falling.setX(falling.getX()+1);
+	    if (hasCollision() == true) {
+		falling.setX(falling.getX() + 1);
 	    }
 	    notifyListeners();
 	}
@@ -153,8 +176,8 @@ public class Board
     {
 	public void actionPerformed(ActionEvent e) {
 //	    System.out.println("Höger: " + hasCollision());
-	    falling.setX(falling.getX()+1);
-	    if(hasCollision()==true){
+	    falling.setX(falling.getX() + 1);
+	    if (hasCollision() == true) {
 		falling.setX(falling.getX() - 1);
 	    }
 

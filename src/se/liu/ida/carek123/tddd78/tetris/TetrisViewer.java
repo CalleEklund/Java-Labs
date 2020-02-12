@@ -33,13 +33,11 @@ public class TetrisViewer
 	    @Override public void actionPerformed(ActionEvent e) {
 		b.addBoardListeners(tc);
 		b.tick();
-
-		//System.out.println(b.hasCollision());
 	    }
 	};
 
 
-	final Timer clockTimer = new Timer(1000, doOneStep);
+	final Timer clockTimer = new Timer(70, doOneStep);
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
 	frame.setLayout(new BorderLayout());
