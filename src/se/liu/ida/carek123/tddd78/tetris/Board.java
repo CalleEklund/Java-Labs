@@ -14,6 +14,7 @@ public class Board
     //sätt som standard case 0
     private Poly falling;
     private List<BoardListener> boardListeners;
+    private boolean gameOver;
 
 
     public Board(final int width, final int height) {
@@ -21,6 +22,7 @@ public class Board
 	this.height = height;
 	this.squares = new SquareType[height][width];
 	this.boardListeners = new ArrayList<>();
+	this.gameOver = false;
 
 	rnd = new Random();
 
@@ -38,6 +40,14 @@ public class Board
 
     public SquareType getSquareType(int x, int y) {
 	return squares[y][x];
+    }
+
+    public boolean isGameOver() {
+	return gameOver;
+    }
+
+    public void setGameOver(final boolean gameOver) {
+	this.gameOver = gameOver;
     }
 
     public int getWidth() {
@@ -110,14 +120,16 @@ public class Board
     }
 
     public boolean hasCollision() {
-	for (int i = 0; i < falling.getHeight(); i++) {
-	    for (int j = 0; j < falling.getHeight(); j++) {
-		if (falling.getPoly(i, j) != SquareType.E &&
-		    getSquareType(falling.getY() + j, falling.getX() + i) != SquareType.E) {
-		    return true;
+	if (falling != null) {
+	    for (int i = 0; i < falling.getHeight(); i++) {
+		for (int j = 0; j < falling.getHeight(); j++) {
+		    if (falling.getPoly(i, j) != SquareType.E &&
+			getSquareType(falling.getY() + j, falling.getX() + i) != SquareType.E) {
+			return true;
+		    }
 		}
 	    }
-	}
+	} else {return false;}
 	return false;
     }
 
@@ -127,9 +139,9 @@ public class Board
 		if ((i <= height && j < 2) || (i < 2 && j <= width) || (i >= (height - 2) && j < width) ||
 		    (i < height && j >= (width - 2))) {
 		    squares[i][j] = SquareType.OUTSIDE;
-		} else if(p != null){
-		    squares[i][j] = getSquareAt(i,j);
-		}else {
+		} else if (p != null) {
+		    squares[i][j] = getSquareAt(i, j);
+		} else {
 		    squares[i][j] = SquareType.E;
 
 		}
@@ -141,8 +153,11 @@ public class Board
 
     public void tick() {
 	if (falling != null) {
-	    notifyListeners();
+	    // System.out.println(hasCollision());
+
 	    falling.setY(falling.getY() + 1);
+	    notifyListeners();
+	    System.out.println(hasCollision());
 	    if (hasCollision() == true) {
 		falling.setY(falling.getY() - 1);
 		addPolyToBoard(falling);
@@ -151,9 +166,8 @@ public class Board
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
 	    Poly newPoly = TetrominoMaker.getPoly(randInd);
 	    setFalling(newPoly);
-		//implementar en flaffa i tetrisviewer som håller koll på om det är game over
-	    if(hasCollision()){
-		System.out.println("Game Over");
+	    if (hasCollision()) {
+		setGameOver(true);
 	    }
 	}
 
@@ -164,6 +178,7 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 //	    System.out.println("Vänster: "+hasCollision());
 	    falling.setX(falling.getX() - 1);
+
 	    if (hasCollision() == true) {
 		falling.setX(falling.getX() + 1);
 	    }
@@ -177,6 +192,7 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 //	    System.out.println("Höger: " + hasCollision());
 	    falling.setX(falling.getX() + 1);
+
 	    if (hasCollision() == true) {
 		falling.setX(falling.getX() - 1);
 	    }
