@@ -3,39 +3,41 @@ package se.liu.ida.carek123.tddd78.tetris;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class Board
 {
     private SquareType[][] squares;
-    private int width, height;
+    private int width, height, frameHeight, frameWidth;
     private Random rnd;
-    //sätt som standard case 0
     private Poly falling;
     private List<BoardListener> boardListeners;
     private boolean gameOver;
 
 
-    public Board(final int width, final int height) {
+    public Board(final int height, final int width) {
 	this.width = width;
 	this.height = height;
-	this.squares = new SquareType[height][width];
+	this.frameWidth = width + 4;
+	this.frameHeight = height + 4;
+	this.squares = new SquareType[height + 4][width + 4];
 	this.boardListeners = new ArrayList<>();
 	this.gameOver = false;
-
 	rnd = new Random();
 
-	for (int i = 0; i < height; i++) {
-	    for (int j = 0; j < width; j++) {
-		if ((i <= height && j < 2) || (i < 2 && j <= width) || (i >= (height - 2) && j < width) ||
-		    (i < height && j >= (width - 2))) {
+	for (int i = 0; i < height + 4; i++) {
+	    for (int j = 0; j < width + 4; j++) {
+		if (i < 2 || i > height + 1 || j < 2 || j > width + 1) {
 		    squares[i][j] = SquareType.OUTSIDE;
 		} else {
 		    squares[i][j] = SquareType.E;
 		}
 	    }
 	}
+
+
     }
 
     public SquareType getSquareType(int x, int y) {
@@ -142,21 +144,22 @@ public class Board
 	}
     }
 
-
     public void tick() {
 	if (falling != null) {
 	    falling.setY(falling.getY() + 1);
-
 	    if (hasCollision() == true) {
 		falling.setY(falling.getY() - 1);
 		addPolyToBoard();
+		checkRow();
 		setFalling(null);
 	    }
 
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(5);
+	    Poly newPoly = TetrominoMaker.getPoly(3);
 	    setFalling(newPoly);
+
+	    falling.setX(height / 2);
 	    if (hasCollision() == true) {
 		setFalling(null);
 		setGameOver(true);
@@ -167,16 +170,27 @@ public class Board
 	notifyListeners();
     }
 
+    public void checkRow() {
+	int counter = 0;
+	for (int i = 2; i < frameHeight - 2; i++) {
+	    if (!Arrays.asList(squares[i]).contains(SquareType.E) || !Arrays.asList(squares[i]).contains(SquareType.OUTSIDE)) {
+		counter++;
+		System.out.println(counter);
+	    }
+	}
+    }
+
     Action moveLeft = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
+
 	    if (falling != null) {
 		falling.setX(falling.getX() - 1);
 		if (hasCollision() == true) {
 		    falling.setX(falling.getX() + 1);
 		}
-		notifyListeners();
 	    }
+	    notifyListeners();
 
 	}
 
@@ -202,7 +216,7 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 	    if (falling != null) {
 		Poly currentPoly = getFalling();
-		Poly rotatedPoly = falling.rotateRight();
+		Poly rotatedPoly = falling.rotate(true);
 		rotatedPoly.setY(falling.getY());
 		rotatedPoly.setX(falling.getX());
 		setFalling(rotatedPoly);
@@ -221,7 +235,7 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 	    if (falling != null) {
 		Poly currentPoly = getFalling();
-		Poly rotatedPoly = falling.rotateRight();
+		Poly rotatedPoly = falling.rotate(false);
 		rotatedPoly.setY(falling.getY());
 		rotatedPoly.setX(falling.getX());
 		setFalling(rotatedPoly);

@@ -8,11 +8,14 @@ public class TetrisViewer
 {
     private Board b;
     private final static int FONT_SIZE = 16;
+    private final static int WIDTH = 10;
+    private final static int HEIGHT = 18;
+
     private Timer clockTimer;
 
     public TetrisViewer(final Board b) {
 	this.b = b;
-	clockTimer = new Timer(700, null);
+	clockTimer = new Timer(100, null);
 
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
@@ -25,33 +28,15 @@ public class TetrisViewer
 	TetrisComponent tc = new TetrisComponent(b);
 
 
-	final InputMap in = tc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-	in.put(KeyStroke.getKeyStroke("LEFT"), "moveleft");
-	in.put(KeyStroke.getKeyStroke("RIGHT"), "moveright");
-
-	in.put(KeyStroke.getKeyStroke("UP"), "rotateRight");
-	in.put(KeyStroke.getKeyStroke("DOWN"), "rotateLeft");
-
-
-
-	final ActionMap act = tc.getActionMap();
-	act.put("moveleft", b.moveLeft);
-	act.put("moveright", b.moveRight);
-
-	act.put("rotateRight", b.rotateRight);
-	act.put("rotateLeft", b.rotateLeft);
-
-
-
-
 	final Action doOneStep = new AbstractAction()
 	{
 	    @Override public void actionPerformed(ActionEvent e) {
-		//System.out.println(b.isGameOver());
 		if (!b.isGameOver()) {
 		    b.addBoardListeners(tc);
 		    b.tick();
-		}else{
+
+
+		} else {
 		    clockTimer.stop();
 		}
 
@@ -71,7 +56,7 @@ public class TetrisViewer
     }
 
     public static void main(String[] args) {
-	Board brade = new Board(18, 10);
+	Board brade = new Board(WIDTH, HEIGHT);
 
 	TetrisViewer tv = new TetrisViewer(brade);
 	tv.show();

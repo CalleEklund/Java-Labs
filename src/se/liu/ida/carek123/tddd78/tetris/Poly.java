@@ -7,7 +7,7 @@ public class Poly
 
     public Poly(final SquareType[][] poly) {
 	this.poly = poly;
-	this.x = 2;
+	this.x = 0;
 	this.y = 2;
     }
 
@@ -39,18 +39,24 @@ public class Poly
 	return poly.length;
     }
 
-    public Poly rotateRight() {
+    public Poly rotate(boolean right) {
 
 	Poly newPoly = new Poly(new SquareType[poly.length][poly.length]);
 
-	    for (int r = 0; r < poly.length; r++) {
-		for (int c = 0; c < poly.length; c++) {
-			newPoly.poly[c][poly.length - 1 - r] = this.poly[r][c];
+	for (int r = 0; r < poly.length; r++) {
+	    for (int c = 0; c < poly.length; c++) {
+		if (right) {
+		    newPoly.poly[c][poly.length - 1 - r] = this.poly[r][c];
+		} else {
+		    newPoly.poly[poly.length - 1 - c][r] = this.poly[r][c];
+
 		}
 	    }
-
+	}
 
 	return newPoly;
+
+
     }
 
 
