@@ -64,7 +64,6 @@ public class Board
 
     public void setFalling(Poly falling) {
 	this.falling = falling;
-	notifyListeners();
     }
 
     public void addBoardListeners(BoardListener bl) {
@@ -129,76 +128,112 @@ public class Board
 		    }
 		}
 	    }
-	} else {return false;}
+	}
 	return false;
     }
 
-    public void addPolyToBoard(Poly p) {
-	for (int i = 0; i < height; i++) {
-	    for (int j = 0; j < width; j++) {
-		if ((i <= height && j < 2) || (i < 2 && j <= width) || (i >= (height - 2) && j < width) ||
-		    (i < height && j >= (width - 2))) {
-		    squares[i][j] = SquareType.OUTSIDE;
-		} else if (p != null) {
-		    squares[i][j] = getSquareAt(i, j);
-		} else {
-		    squares[i][j] = SquareType.E;
-
+    public void addPolyToBoard() {
+	for (int i = 0; i < falling.getHeight(); i++) {
+	    for (int j = 0; j < falling.getWidth(); j++) {
+		if (falling.getPoly(i, j) != SquareType.E) {
+		    squares[falling.getX() + i][falling.getY() + j] = falling.getPoly(i, j);
 		}
 	    }
 	}
-	setFalling(null);
     }
 
 
     public void tick() {
 	if (falling != null) {
-	    // System.out.println(hasCollision());
-
 	    falling.setY(falling.getY() + 1);
-	    notifyListeners();
-	    System.out.println(hasCollision());
+
 	    if (hasCollision() == true) {
 		falling.setY(falling.getY() - 1);
-		addPolyToBoard(falling);
+		addPolyToBoard();
+		setFalling(null);
 	    }
+
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(randInd);
+	    Poly newPoly = TetrominoMaker.getPoly(5);
 	    setFalling(newPoly);
-	    if (hasCollision()) {
+	    if (hasCollision() == true) {
+		setFalling(null);
 		setGameOver(true);
 	    }
-	}
 
+
+	}
+	notifyListeners();
     }
 
     Action moveLeft = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-//	    System.out.println("Vänster: "+hasCollision());
-	    falling.setX(falling.getX() - 1);
-
-	    if (hasCollision() == true) {
-		falling.setX(falling.getX() + 1);
+	    if (falling != null) {
+		falling.setX(falling.getX() - 1);
+		if (hasCollision() == true) {
+		    falling.setX(falling.getX() + 1);
+		}
+		notifyListeners();
 	    }
-	    notifyListeners();
+
 	}
 
     };
 
-    final Action moveRight = new AbstractAction()
+    Action moveRight = new AbstractAction()
     {
 	public void actionPerformed(ActionEvent e) {
-//	    System.out.println("Höger: " + hasCollision());
-	    falling.setX(falling.getX() + 1);
+	    if (falling != null) {
+		falling.setX(falling.getX() + 1);
+		if (hasCollision() == true) {
+		    falling.setX(falling.getX() - 1);
+		}
 
-	    if (hasCollision() == true) {
-		falling.setX(falling.getX() - 1);
+		notifyListeners();
+	    }
+	}
+
+    };
+
+    Action rotateRight = new AbstractAction()
+    {
+	public void actionPerformed(ActionEvent e) {
+	    if (falling != null) {
+		Poly currentPoly = getFalling();
+		Poly rotatedPoly = falling.rotateRight();
+		rotatedPoly.setY(falling.getY());
+		rotatedPoly.setX(falling.getX());
+		setFalling(rotatedPoly);
+		if (hasCollision()) {
+		    setFalling(currentPoly);
+		}
+
 	    }
 
-	    notifyListeners();
+
 	}
+
+    };
+    Action rotateLeft = new AbstractAction()
+    {
+	public void actionPerformed(ActionEvent e) {
+	    if (falling != null) {
+		Poly currentPoly = getFalling();
+		Poly rotatedPoly = falling.rotateRight();
+		rotatedPoly.setY(falling.getY());
+		rotatedPoly.setX(falling.getX());
+		setFalling(rotatedPoly);
+		if (hasCollision()) {
+		    setFalling(currentPoly);
+		}
+
+	    }
+
+
+	}
+
     };
 
 }

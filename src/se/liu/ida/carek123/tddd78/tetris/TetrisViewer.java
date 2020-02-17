@@ -12,6 +12,10 @@ public class TetrisViewer
 
     public TetrisViewer(final Board b) {
 	this.b = b;
+	clockTimer = new Timer(700, null);
+
+	clockTimer.setCoalesce(true);
+	clockTimer.start();
 
     }
 
@@ -25,30 +29,36 @@ public class TetrisViewer
 	in.put(KeyStroke.getKeyStroke("LEFT"), "moveleft");
 	in.put(KeyStroke.getKeyStroke("RIGHT"), "moveright");
 
+	in.put(KeyStroke.getKeyStroke("UP"), "rotateRight");
+	in.put(KeyStroke.getKeyStroke("DOWN"), "rotateLeft");
+
+
+
 	final ActionMap act = tc.getActionMap();
 	act.put("moveleft", b.moveLeft);
 	act.put("moveright", b.moveRight);
+
+	act.put("rotateRight", b.rotateRight);
+	act.put("rotateLeft", b.rotateLeft);
+
+
 
 
 	final Action doOneStep = new AbstractAction()
 	{
 	    @Override public void actionPerformed(ActionEvent e) {
-		if (b.isGameOver() == true) {
-		    clockTimer.stop();
-		} else {
+		//System.out.println(b.isGameOver());
+		if (!b.isGameOver()) {
 		    b.addBoardListeners(tc);
 		    b.tick();
-
+		}else{
+		    clockTimer.stop();
 		}
-		//System.out.println(b.isGameOver());
-
 
 	    }
 	};
-	clockTimer = new Timer(100, doOneStep);
 
-	clockTimer.setCoalesce(true);
-	clockTimer.start();
+	clockTimer.addActionListener(doOneStep);
 
 	frame.setLayout(new BorderLayout());
 	frame.add(tc, BorderLayout.CENTER);
@@ -61,7 +71,7 @@ public class TetrisViewer
     }
 
     public static void main(String[] args) {
-	Board brade = new Board(17, 10);
+	Board brade = new Board(18, 10);
 
 	TetrisViewer tv = new TetrisViewer(brade);
 	tv.show();
