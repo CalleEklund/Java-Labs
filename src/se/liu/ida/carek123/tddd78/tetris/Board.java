@@ -22,14 +22,14 @@ public class Board
 	this.height = height;
 	this.frameWidth = width + 4;
 	this.frameHeight = height + 4;
-	this.squares = new SquareType[height + 4][width + 4];
+	this.squares = new SquareType[frameHeight][frameWidth];
 	this.boardListeners = new ArrayList<>();
 	this.gameOver = false;
 	rnd = new Random();
 
-	for (int i = 0; i < height + 4; i++) {
-	    for (int j = 0; j < width + 4; j++) {
-		if (i < 2 || i > height + 1 || j < 2 || j > width + 1) {
+	for (int i = 0; i < frameHeight; i++) {
+	    for (int j = 0; j < frameWidth; j++) {
+		if (j < 2 || i > height + 1 || i < 2 || j > width + 1) {
 		    squares[i][j] = SquareType.OUTSIDE;
 		} else {
 		    squares[i][j] = SquareType.E;
@@ -171,11 +171,32 @@ public class Board
     }
 
     public void checkRow() {
-	int counter = 0;
-	for (int i = 2; i < frameHeight - 2; i++) {
-	    if (!Arrays.asList(squares[i]).contains(SquareType.E) || !Arrays.asList(squares[i]).contains(SquareType.OUTSIDE)) {
-		counter++;
-		System.out.println(counter);
+	int numClearedLines = 0;
+	boolean fullRow;
+
+	for (int i = frameHeight - 2; i > 2; i--) {
+	    fullRow = true;
+	    for (int j = 2; j < frameWidth - 2; j++) {
+		if (squares[j][i] == SquareType.E) {
+		    fullRow = false;
+		    break;
+		}
+	    }
+	    if (fullRow) {
+		System.out.println("full rad");
+		deleteRow(i);
+		i += 1;
+		numClearedLines += 1;
+	    }
+
+	}
+    }
+
+    public void deleteRow(int index) {
+	for (int j = index-1; j > 0; j--) {
+
+	    for (int i = 2; i < frameWidth-2; i++) {
+		squares[i][j+1] = squares[i][j];
 	    }
 	}
     }

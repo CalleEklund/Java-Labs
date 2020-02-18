@@ -1,31 +1,42 @@
 package se.liu.ida.carek123.tddd78.tetris;
 
+import net.miginfocom.swt.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TetrisViewer
 {
     private Board b;
-    private final static int FONT_SIZE = 16;
-    private final static int WIDTH = 10;
-    private final static int HEIGHT = 18;
+    private final static int WIDTH = 18;
+    private final static int HEIGHT = 10;
+    private final static Font font = new Font("Monospaced", Font.PLAIN, 20);
+    private StartScreen sscreen;
 
     private Timer clockTimer;
 
+    private JFrame frame;
+    private JTextArea textarea;
+    private TetrisComponent tc;
+    private JLabel score;
     public TetrisViewer(final Board b) {
 	this.b = b;
 	clockTimer = new Timer(100, null);
 
-	clockTimer.setCoalesce(true);
-	clockTimer.start();
 
     }
 
-    public void show() {
-	JFrame frame = new JFrame("Tetris");
-	JTextArea textarea = new JTextArea(b.getHeight(), b.getWidth());
-	TetrisComponent tc = new TetrisComponent(b);
+    public void show() throws InterruptedException {
+	frame = new JFrame("Tetris");
+	textarea = new JTextArea(b.getHeight(), b.getWidth());
+	tc = new TetrisComponent(b);
+
+	final JMenuBar bar = new JMenuBar();
+	final JMenuItem jmi = new JMenuItem("Avsluta", 'A');
+
+	bar.add(jmi);
 
 
 	final Action doOneStep = new AbstractAction()
@@ -43,20 +54,79 @@ public class TetrisViewer
 	    }
 	};
 
+	final Action menuexit = new AbstractAction()
+	{
+	    @Override public void actionPerformed(ActionEvent e) {
+		int ans = JOptionPane.showConfirmDialog(frame, "Are you sure?", "", JOptionPane.YES_NO_OPTION);
+		if (ans == 0) {
+		    System.exit(0);
+		}
+	    }
+	};
+
 	clockTimer.addActionListener(doOneStep);
 
-	frame.setLayout(new BorderLayout());
-	frame.add(tc, BorderLayout.CENTER);
-	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	textarea.setFont(new Font("Monospaced", Font.PLAIN, FONT_SIZE));
-	frame.pack();
-	frame.setVisible(true);
+	jmi.addActionListener(menuexit);
+	frame.setJMenuBar(bar);
 
+	initLoad();
 
     }
 
-    public static void main(String[] args) {
-	Board brade = new Board(WIDTH, HEIGHT);
+    public void initLoad() throws InterruptedException {
+
+	sscreen = new StartScreen();
+	score = new JLabel("Score: \n"+500);
+	score.setFont(font);
+	score.setOpaque(true);
+	score.setBackground(Color.RED);
+
+	textarea.setFont(font);
+
+
+//	frame.add(sscreen);
+//	System.out.println("image loaded");
+//	frame.setSize(500, 380);
+//	frame.setVisible(true);
+//
+//	Thread.sleep(5000);
+//	frame.dispose();
+//	sscreen.setVisible(false);
+
+
+
+	frame.setLayout(new GridBagLayout());
+	GridBagConstraints gbc = new GridBagConstraints();
+
+	gbc.fill = GridBagConstraints.HORIZONTAL;
+
+	gbc.gridx = 0;
+	gbc.gridy = 0;
+	gbc.gridheight = 2;
+	frame.add(tc, gbc);
+
+
+	gbc.gridx++;
+	gbc.gridheight = 1;
+	gbc.insets = new Insets(20,50,0,50);
+	gbc.fill = GridBagConstraints.BOTH;
+	frame.add(score,gbc);
+
+
+
+	System.out.println("Tetris loaded");
+
+	frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	frame.pack();
+	frame.setVisible(true);
+
+	clockTimer.setCoalesce(true);
+	clockTimer.start();
+
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+	Board brade = new Board(HEIGHT, WIDTH);
 
 	TetrisViewer tv = new TetrisViewer(brade);
 	tv.show();

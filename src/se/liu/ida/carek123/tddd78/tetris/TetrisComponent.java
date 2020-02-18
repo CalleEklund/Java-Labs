@@ -22,7 +22,6 @@ public class TetrisComponent extends JComponent implements BoardListener
 	STColor.put(SquareType.T, Color.MAGENTA);
 	STColor.put(SquareType.Z, Color.RED);
 	STColor.put(SquareType.E, Color.DARK_GRAY);
-	STColor.put(SquareType.OUTSIDE, Color.PINK);
 
 	final InputMap in = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	in.put(KeyStroke.getKeyStroke("LEFT"), "moveleft");
