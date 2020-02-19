@@ -41,7 +41,7 @@ public class Board
     }
 
     public SquareType getSquareType(int x, int y) {
-	return squares[y][x];
+	return squares[y + 2][x + 2];
     }
 
     public boolean isGameOver() {
@@ -98,10 +98,11 @@ public class Board
 	int endY;
 
 	if (falling == null) {
-	    sizeX = x;
-	    sizeY = y;
-	    endX = 0;
-	    endY = 0;
+	    return getSquareType(x, y);
+	    //sizeX = x;
+	    //sizeY = y;
+	    //endX = 0;
+	    //endY = 0;
 	} else {
 	    sizeX = x - falling.getX();
 	    sizeY = y - falling.getY();
@@ -109,23 +110,25 @@ public class Board
 	    endX = falling.getWidth();
 	    endY = falling.getHeight();
 	}
-	if (startX <= sizeX && sizeX < endX && startY <= sizeY && sizeY < endY) {
-	    if (falling.getPoly(sizeX, sizeY) == SquareType.E) {
-		return squares[x][y];
-	    } else {
-		return falling.getPoly(sizeX, sizeY);
+	if (x >= falling.getX() && x < falling.getX() + falling.getWidth()) {
+	    if (y >= falling.getY() && y < falling.getY() + falling.getHeight()) {
+		//if (startX <= sizeX && sizeX < endX && startY <= sizeY && sizeY < endY) {
+		if (falling.getPoly(sizeX, sizeY) == SquareType.E) {
+		    return getSquareType(x, y);
+		} else {
+		    return falling.getPoly(sizeX, sizeY);
+		}
 	    }
-	} else {
-	    return squares[x][y];
 	}
+	return getSquareType(x, y);
     }
 
     public boolean hasCollision() {
 	if (falling != null) {
-	    for (int i = 0; i < falling.getHeight(); i++) {
-		for (int j = 0; j < falling.getHeight(); j++) {
-		    if (falling.getPoly(i, j) != SquareType.E &&
-			getSquareType(falling.getY() + j, falling.getX() + i) != SquareType.E) {
+	    for (int y = 0; y < falling.getHeight(); y++) {
+		for (int x = 0; x < falling.getWidth(); x++) {
+		    if (falling.getPoly(x, y) != SquareType.E &&
+			getSquareType(falling.getX() + x, falling.getY() + y) != SquareType.E) {
 			return true;
 		    }
 		}
@@ -137,8 +140,8 @@ public class Board
     public void addPolyToBoard() {
 	for (int i = 0; i < falling.getHeight(); i++) {
 	    for (int j = 0; j < falling.getWidth(); j++) {
-		if (falling.getPoly(i, j) != SquareType.E) {
-		    squares[falling.getX() + i][falling.getY() + j] = falling.getPoly(i, j);
+		if (falling.getPoly(j, i) != SquareType.E) {
+		    squares[falling.getY() + i + 2][falling.getX() + j + 2] = falling.getPoly(j, i);
 		}
 	    }
 	}
@@ -150,16 +153,18 @@ public class Board
 	    if (hasCollision() == true) {
 		falling.setY(falling.getY() - 1);
 		addPolyToBoard();
-		checkRow();
 		setFalling(null);
+		checkAndClearRow();
+
 	    }
 
 	} else {
 	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
-	    Poly newPoly = TetrominoMaker.getPoly(3);
+	    Poly newPoly = TetrominoMaker.getPoly(randInd);
 	    setFalling(newPoly);
 
-	    falling.setX(height / 2);
+	    falling.setX(width / 2);
+
 	    if (hasCollision() == true) {
 		setFalling(null);
 		setGameOver(true);
@@ -170,33 +175,28 @@ public class Board
 	notifyListeners();
     }
 
-    public void checkRow() {
-	int numClearedLines = 0;
-	boolean fullRow;
-
-	for (int i = frameHeight - 2; i > 2; i--) {
-	    fullRow = true;
-	    for (int j = 2; j < frameWidth - 2; j++) {
-		if (squares[j][i] == SquareType.E) {
-		    fullRow = false;
-		    break;
-		}
+    public void checkAndClearRow() {
+	List<Integer> fullRows = new ArrayList<>();
+	for (int i = 2; i < frameHeight - 2; i++) {
+	    if (!Arrays.asList(squares[i]).contains(SquareType.E) || !Arrays.asList(squares[i]).contains(SquareType.OUTSIDE)) {
+		fullRows.add(i);
 	    }
-	    if (fullRow) {
-		System.out.println("full rad");
-		deleteRow(i);
-		i += 1;
-		numClearedLines += 1;
-	    }
-
 	}
-    }
+	System.out.println(fullRows);
+	for (int rowInd : fullRows) {
+	    for (int i = 2; i < frameWidth - 2; i++) {
+		squares[rowInd][i] = SquareType.E;
+	    }
 
-    public void deleteRow(int index) {
-	for (int j = index-1; j > 0; j--) {
+	    for (int r = frameHeight - 2; r > 2; r--) {
+		for (int c = 2; c < frameWidth - 2; c++) {
+		    if (squares[r][c] == SquareType.E && squares[r + 1][c] != SquareType.E) {
 
-	    for (int i = 2; i < frameWidth-2; i++) {
-		squares[i][j+1] = squares[i][j];
+			squares[r][c] = squares[r - 1][c];
+			squares[r - 1][c] = SquareType.E;
+			squares[2][c] = SquareType.E;
+		    }
+		}
 	    }
 	}
     }

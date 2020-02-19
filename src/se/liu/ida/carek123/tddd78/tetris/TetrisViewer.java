@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
 public class TetrisViewer
 {
     private Board b;
-    private final static int WIDTH = 18;
-    private final static int HEIGHT = 10;
-    private final static Font font = new Font("Monospaced", Font.PLAIN, 20);
+    private final static int WIDTH = 10;
+    private final static int HEIGHT = 18;
+    public final static Font font = new Font("Monospaced", Font.PLAIN, 20);
     private StartScreen sscreen;
 
     private Timer clockTimer;
@@ -20,7 +20,7 @@ public class TetrisViewer
     private JFrame frame;
     private JTextArea textarea;
     private TetrisComponent tc;
-    private JLabel score;
+
     public TetrisViewer(final Board b) {
 	this.b = b;
 	clockTimer = new Timer(100, null);
@@ -73,13 +73,17 @@ public class TetrisViewer
 
     }
 
+    public String getPlayerName() {
+	String input = JOptionPane.showInputDialog("Player name: ");
+	return input;
+    }
+
     public void initLoad() throws InterruptedException {
+	frame.setLayout(new GridBagLayout());
+	GridBagConstraints gbc = new GridBagConstraints();
 
 	sscreen = new StartScreen();
-	score = new JLabel("Score: \n"+500);
-	score.setFont(font);
-	score.setOpaque(true);
-	score.setBackground(Color.RED);
+
 
 	textarea.setFont(font);
 
@@ -94,10 +98,6 @@ public class TetrisViewer
 //	sscreen.setVisible(false);
 
 
-
-	frame.setLayout(new GridBagLayout());
-	GridBagConstraints gbc = new GridBagConstraints();
-
 	gbc.fill = GridBagConstraints.HORIZONTAL;
 
 	gbc.gridx = 0;
@@ -106,12 +106,13 @@ public class TetrisViewer
 	frame.add(tc, gbc);
 
 
-	gbc.gridx++;
-	gbc.gridheight = 1;
-	gbc.insets = new Insets(20,50,0,50);
-	gbc.fill = GridBagConstraints.BOTH;
-	frame.add(score,gbc);
-
+//	gbc.gridx++;
+//	gbc.gridheight = 1;
+//	gbc.insets = new Insets(20, 5, 0, 50);
+//	gbc.fill = GridBagConstraints.BOTH;
+//	HighScore score = new HighScore(getPlayerName());
+//
+//	frame.add(score, gbc);
 
 
 	System.out.println("Tetris loaded");

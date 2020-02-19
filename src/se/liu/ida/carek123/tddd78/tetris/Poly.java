@@ -8,7 +8,7 @@ public class Poly
     public Poly(final SquareType[][] poly) {
 	this.poly = poly;
 	this.x = 0;
-	this.y = 2;
+	this.y = 0;
     }
 
     public int getX() {

@@ -1,13 +1,21 @@
 package se.liu.ida.carek123.tddd78.tetris;
 
-public class HighScore
+import javax.swing.*;
+import java.awt.*;
+
+public class HighScore extends JPanel
 {
+    private JLabel score;
     private String name;
     private int points;
 
-    public HighScore(final String name, final int points) {
+    public HighScore(final String name) {
 	this.name = name;
-	this.points = points;
+	this.points = 0;
+	score = new JLabel(this.name + "\n" + this.points);
+	score.setFont(TetrisViewer.font);
+	score.setOpaque(true);
+	score.setBackground(Color.RED);
     }
 
     public String getName() {

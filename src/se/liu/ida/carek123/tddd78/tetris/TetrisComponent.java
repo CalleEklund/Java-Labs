@@ -42,9 +42,9 @@ public class TetrisComponent extends JComponent implements BoardListener
     @Override protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
-	for (int i = 0; i < b.getHeight(); i++) {
-	    for (int j = 0; j < b.getWidth(); j++) {
-		g2d.setColor(STColor.get(b.getSquareAt(i+2, j+2)));
+	for (int i = 0; i < b.getWidth(); i++) {
+	    for (int j = 0; j < b.getHeight(); j++) {
+		g2d.setColor(STColor.get(b.getSquareAt(i, j)));
 		g2d.fillRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
 		g2d.setColor(Color.WHITE);
 		g2d.drawRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
@@ -53,7 +53,7 @@ public class TetrisComponent extends JComponent implements BoardListener
     }
 
     @Override public Dimension getPreferredSize() {
-	return new Dimension(this.b.getHeight() * SQUARE_SIZE, this.b.getWidth() * SQUARE_SIZE);
+	return new Dimension(this.b.getWidth() * SQUARE_SIZE, this.b.getHeight() * SQUARE_SIZE);
     }
 
     @Override public void BoardChanged() {
