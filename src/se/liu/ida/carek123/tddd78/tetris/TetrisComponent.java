@@ -44,6 +44,7 @@ public class TetrisComponent extends JComponent implements BoardListener
 	final Graphics2D g2d = (Graphics2D) g;
 	for (int i = 0; i < b.getWidth(); i++) {
 	    for (int j = 0; j < b.getHeight(); j++) {
+
 		g2d.setColor(STColor.get(b.getSquareAt(i, j)));
 		g2d.fillRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
 		g2d.setColor(Color.WHITE);

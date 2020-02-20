@@ -14,7 +14,6 @@ public class TetrominoMaker
 	    throw new IllegalArgumentException("invalid index:" + n);
 	} else {
 	    switch (n) {
-	        //lägg till case 0 1x1 tom array för empty
 		case 0:
 		    sq = new SquareType[4][4];
 

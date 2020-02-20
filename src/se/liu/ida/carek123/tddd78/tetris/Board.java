@@ -10,12 +10,13 @@ import java.util.Random;
 public class Board
 {
     private SquareType[][] squares;
-    private int width, height, frameHeight, frameWidth;
+    private int width, height, frameHeight, frameWidth, score;
     private Random rnd;
     private Poly falling;
     private List<BoardListener> boardListeners;
     private boolean gameOver;
 
+    public List<Integer> fullRows;
 
     public Board(final int height, final int width) {
 	this.width = width;
@@ -23,6 +24,7 @@ public class Board
 	this.frameWidth = width + 4;
 	this.frameHeight = height + 4;
 	this.squares = new SquareType[frameHeight][frameWidth];
+	this.score = 0;
 	this.boardListeners = new ArrayList<>();
 	this.gameOver = false;
 	rnd = new Random();
@@ -89,30 +91,18 @@ public class Board
     }
 
     public SquareType getSquareAt(int x, int y) {
-	int startX = 0;
-	int startY = 0;
-
 	int sizeX;
 	int sizeY;
-	int endX;
-	int endY;
 
 	if (falling == null) {
 	    return getSquareType(x, y);
-	    //sizeX = x;
-	    //sizeY = y;
-	    //endX = 0;
-	    //endY = 0;
 	} else {
 	    sizeX = x - falling.getX();
 	    sizeY = y - falling.getY();
 
-	    endX = falling.getWidth();
-	    endY = falling.getHeight();
 	}
 	if (x >= falling.getX() && x < falling.getX() + falling.getWidth()) {
 	    if (y >= falling.getY() && y < falling.getY() + falling.getHeight()) {
-		//if (startX <= sizeX && sizeX < endX && startY <= sizeY && sizeY < endY) {
 		if (falling.getPoly(sizeX, sizeY) == SquareType.E) {
 		    return getSquareType(x, y);
 		} else {
@@ -121,6 +111,10 @@ public class Board
 	    }
 	}
 	return getSquareType(x, y);
+    }
+
+    public int getScore() {
+	return score;
     }
 
     public boolean hasCollision() {
@@ -150,24 +144,22 @@ public class Board
     public void tick() {
 	if (falling != null) {
 	    falling.setY(falling.getY() + 1);
-	    if (hasCollision() == true) {
+	    if (hasCollision()) {
 		falling.setY(falling.getY() - 1);
 		addPolyToBoard();
-		setFalling(null);
+		falling = null;
 		checkAndClearRow();
 
 	    }
 
 	} else {
-	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 1);
+	    int randInd = rnd.nextInt(TetrominoMaker.getNumberOfTypes() - 2);
 	    Poly newPoly = TetrominoMaker.getPoly(randInd);
-	    setFalling(newPoly);
-
+	    falling = newPoly;
 	    falling.setX(width / 2);
-
-	    if (hasCollision() == true) {
-		setFalling(null);
-		setGameOver(true);
+	    if (hasCollision()) {
+		falling = null;
+		gameOver = true;
 	    }
 
 
@@ -176,29 +168,39 @@ public class Board
     }
 
     public void checkAndClearRow() {
-	List<Integer> fullRows = new ArrayList<>();
+	fullRows = new ArrayList<>();
 	for (int i = 2; i < frameHeight - 2; i++) {
 	    if (!Arrays.asList(squares[i]).contains(SquareType.E) || !Arrays.asList(squares[i]).contains(SquareType.OUTSIDE)) {
 		fullRows.add(i);
 	    }
 	}
-	System.out.println(fullRows);
+	//System.out.println(fullRows);
 	for (int rowInd : fullRows) {
-	    for (int i = 2; i < frameWidth - 2; i++) {
-		squares[rowInd][i] = SquareType.E;
-	    }
+	    Arrays.fill(squares[rowInd], SquareType.E);
 
-	    for (int r = frameHeight - 2; r > 2; r--) {
-		for (int c = 2; c < frameWidth - 2; c++) {
-		    if (squares[r][c] == SquareType.E && squares[r + 1][c] != SquareType.E) {
-
-			squares[r][c] = squares[r - 1][c];
-			squares[r - 1][c] = SquareType.E;
-			squares[2][c] = SquareType.E;
-		    }
-		}
+	    for (int r = rowInd; r > 2; r--) {
+		squares[r] = squares[r - 1];
 	    }
 	}
+	switch (fullRows.size()) {
+	    case 1:
+		score += 100;
+		break;
+	    case 2:
+		score += 300;
+		break;
+	    case 3:
+		score += 500;
+		break;
+	    case 4:
+	        score += 800;
+	        break;
+	    default:
+
+
+	}
+	TetrisViewer.setPoints(score);
+
     }
 
     Action moveLeft = new AbstractAction()
@@ -207,7 +209,7 @@ public class Board
 
 	    if (falling != null) {
 		falling.setX(falling.getX() - 1);
-		if (hasCollision() == true) {
+		if (hasCollision()) {
 		    falling.setX(falling.getX() + 1);
 		}
 	    }
@@ -222,7 +224,7 @@ public class Board
 	public void actionPerformed(ActionEvent e) {
 	    if (falling != null) {
 		falling.setX(falling.getX() + 1);
-		if (hasCollision() == true) {
+		if (hasCollision()) {
 		    falling.setX(falling.getX() - 1);
 		}
 
