@@ -21,8 +21,6 @@ public class StartScreen extends JComponent
 
 	at.translate(10, 10);
 
-	//at.scale(0.5, 0.5);
-
 	g2d.setTransform(at);
 
 	startIcon.paintIcon(this, g, 0, 0);
@@ -40,8 +38,6 @@ public class StartScreen extends JComponent
 	StartScreen screen = new StartScreen();
 
 	frame.add(screen);
-	//frame.setSize(300, 300);
-	//frame.setSize(screen.getSize());
 	frame.pack();
 	frame.setVisible(true);
     }
